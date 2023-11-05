@@ -5,15 +5,15 @@ import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
 
 @Entity(name="user_table")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
-    private String username;
-    private String password;
-    @Column(name = "unique_url") // 필드와 열 매핑
-    private String uniqueUrl; // 필드 이름도 변경 (CamelCase)
-    private String role;
+    public class User {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long user_id;
+        private String username;
+        private String password;
+        @Column(name = "unique_url") // 필드와 열 매핑
+        private String uniqueUrl; // 필드 이름도 변경 (CamelCase)
+        private String role;
 
 
     // Getter and Setter methods

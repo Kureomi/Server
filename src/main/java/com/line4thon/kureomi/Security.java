@@ -12,7 +12,7 @@ public class Security extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/hello", "/signup").permitAll()
+                .antMatchers("/", "/hello", "/signup", "/api/v1/kureomi/create", "/api/v1/kureomi/all", "/api/v1/kureomi/{id}", "/api/v1/kureomi/photo").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class User {
+public class User2 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id;
