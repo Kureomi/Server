@@ -3,8 +3,6 @@ package com.line4thon.kureomi.service;
 import com.line4thon.kureomi.domain.giftBox.GiftBox;
 import com.line4thon.kureomi.domain.photo.Photo;
 import com.line4thon.kureomi.domain.giftBox.GiftBoxRepository;
-import com.line4thon.kureomi.domain.user.User2;
-import com.line4thon.kureomi.domain.user.UserRepository2;
 import com.line4thon.kureomi.web.dto.GiftBoxListResponseDto;
 import com.line4thon.kureomi.web.dto.GiftBoxResponseDto;
 import com.line4thon.kureomi.web.dto.GiftBoxSaveRequestDto;

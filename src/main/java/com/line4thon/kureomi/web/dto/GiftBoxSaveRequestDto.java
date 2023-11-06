@@ -2,7 +2,6 @@ package com.line4thon.kureomi.web.dto;
 
 import com.line4thon.kureomi.domain.giftBox.GiftBox;
 //import com.line4thon.kureomi.domain.user.User;
-import com.line4thon.kureomi.domain.user.User2;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
