@@ -22,8 +22,10 @@ public class GiftBoxController {
         return giftBox.getId();
     }
 
-    @GetMapping("/api/v1/kureomi/all")
+    @GetMapping("/api/v1/kureomi")
     public List<GiftBoxListResponseDto> getGiftBoxList() {
+        // 홈페이지 랜더링
+        // 사용자에 따라 게시물 보기 권한 제어
         return giftBoxService.findAllDesc();
     }
 
