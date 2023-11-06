@@ -1,6 +1,6 @@
 package com.line4thon.kureomi.domain.giftBox;
 
-import com.line4thon.kureomi.domain.user.User;
+//import com.line4thon.kureomi.domain.user.User;
 import com.line4thon.kureomi.domain.photo.Photo;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,10 +31,10 @@ public class GiftBox {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User owner;
+    private User2 owner;
 
     @Builder
-    public GiftBox(String writer, String message, User owner) {
+    public GiftBox(String writer, String message, User2 owner) {
         this.writer = writer;
         this.message = message;
         this.owner = owner;

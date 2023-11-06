@@ -1,7 +1,7 @@
 package com.line4thon.kureomi.web.dto;
 
 import com.line4thon.kureomi.domain.giftBox.GiftBox;
-import com.line4thon.kureomi.domain.user.User;
+//import com.line4thon.kureomi.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ public class GiftBoxSaveRequestDto {
         this.userUniqueUrl = userUniqueUrl;
     }
 
-    public GiftBox toEntity(User owner) {
+    public GiftBox toEntity(User2 owner) {
         return GiftBox.builder()
                 .writer(writer)
                 .message(message)

@@ -3,8 +3,6 @@ package com.line4thon.kureomi.service;
 import com.line4thon.kureomi.domain.giftBox.GiftBox;
 import com.line4thon.kureomi.domain.photo.Photo;
 import com.line4thon.kureomi.domain.giftBox.GiftBoxRepository;
-import com.line4thon.kureomi.domain.user.User;
-import com.line4thon.kureomi.domain.user.UserRepository;
 import com.line4thon.kureomi.web.dto.GiftBoxListResponseDto;
 import com.line4thon.kureomi.web.dto.GiftBoxResponseDto;
 import com.line4thon.kureomi.web.dto.GiftBoxSaveRequestDto;
@@ -23,12 +21,12 @@ import java.util.stream.Collectors;
 public class GiftBoxService {
     private final GiftBoxRepository giftBoxRepository;
     private final PhotoService photoService;
-    private final UserRepository userRepository;
+    private final UserRepository2 userRepository2;
 
     @Transactional
     public GiftBox createGiftBox(GiftBoxSaveRequestDto requestDto) {
         try {
-            User user = userRepository.findByUniqueUrl(requestDto.getUserUniqueUrl());
+            User2 user = userRepository2.findByUniqueUrl(requestDto.getUserUniqueUrl());
             GiftBox giftBox = requestDto.toEntity(user);
 
             List<Long> photoIdList = requestDto.getPhotoIdList();
