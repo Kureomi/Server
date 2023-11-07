@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .authorizeRequests(auth -> auth
                         .antMatchers("/", "/h2-console/**").permitAll()
                         .antMatchers("/api/v1/kureomi/**").permitAll()
-                        .antMatchers("/api/v1/kureomi/{id}").access("@urlAccessDecision.checkAccess(authentication, #id)")
+                        .antMatchers("/api/v1/kureomi/{uniqueUrl}/{id}").access("@urlAccessDecision.checkAccess(authentication, #id)")
                 );
 
         return http.build();
