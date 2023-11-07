@@ -1,7 +1,11 @@
 package com.line4thon.kureomi.domain.giftBox;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.line4thon.kureomi.domain.user.User;
 import com.line4thon.kureomi.domain.photo.Photo;
+import com.line4thon.kureomi.web.dto.PhotoResponseDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +30,7 @@ public class GiftBox {
     @Column(columnDefinition = "TEXT")
     private String message;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "giftBox", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Photo> photos = new ArrayList<>();
 
