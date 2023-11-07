@@ -29,8 +29,7 @@ public class GiftBox {
 
     @Column(columnDefinition = "TEXT")
     private String message;
-
-    @JsonIgnore
+    
     @OneToMany(mappedBy = "giftBox", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Photo> photos = new ArrayList<>();
 
