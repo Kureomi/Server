@@ -11,4 +11,5 @@ public class CustomError extends RuntimeException{
         super(message);
         this.httpStatus = httpStatus;
     }
+
 }
