@@ -14,21 +14,19 @@ public class GiftBoxSaveRequestDto {
     private String writer;
     private String message;
     private List<Long> photoIdList;
-    private String userUniqueUrl;
 
     @Builder
-    public GiftBoxSaveRequestDto(String writer, String message, List<Long> photoIdList, String userUniqueUrl) {
+    public GiftBoxSaveRequestDto(String writer, String message, List<Long> photoIdList) {
         this.writer = writer;
         this.message = message;
         this.photoIdList = photoIdList;
-        this.userUniqueUrl = userUniqueUrl;
     }
 
-    public GiftBox toEntity(User owner) {
+    public GiftBox toEntity(User user) {
         return GiftBox.builder()
                 .writer(writer)
                 .message(message)
-                .owner(owner)
+                .user(user)
                 .build();
     }
 }

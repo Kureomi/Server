@@ -1,6 +1,7 @@
 package com.line4thon.kureomi.domain.user;
 
 import com.line4thon.kureomi.domain.giftBox.GiftBox;
+import com.line4thon.kureomi.domain.photo.Photo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,9 +29,6 @@ public class User {
     @Column(unique = true)
     private String uniqueUrl;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private GiftBox giftBox;
-
     @Builder
     public User (String userName, String email, String password, String uniqueUrl) {
         this.userName = userName;
@@ -39,8 +37,11 @@ public class User {
         this.uniqueUrl = uniqueUrl;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setUniqueUrl(String uniqueUrl) {
         this.uniqueUrl = uniqueUrl;
     }
-
 }

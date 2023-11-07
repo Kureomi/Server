@@ -27,9 +27,7 @@ public class SecurityConfig {
                         .antMatchers("/", "/h2-console/**").permitAll()
                         .antMatchers("/api/v1/kureomi/**").permitAll()
                         .antMatchers("/api/v1/kureomi/{id}").access("@urlAccessDecision.checkAccess(authentication, #id)")
-                )
-                .formLogin()
-                    .loginPage("/api/v1/kureomi/login").permitAll();
+                );
 
         return http.build();
     }

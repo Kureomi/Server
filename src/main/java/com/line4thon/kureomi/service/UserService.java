@@ -1,20 +1,17 @@
 package com.line4thon.kureomi.service;
 import com.line4thon.kureomi.domain.user.User;
 import com.line4thon.kureomi.domain.user.UserRepository;
-import com.line4thon.kureomi.web.dto.UserSaveRequestDto;
-import com.line4thon.kureomi.web.exception.CustomError;
-import com.line4thon.kureomi.web.exception.UserNotFoundException;
+import com.line4thon.kureomi.web.dto.LoginRequestDto;
+import com.line4thon.kureomi.web.dto.LoginResponseDto;
+import com.line4thon.kureomi.web.dto.SignupRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.UUID;
-
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -22,13 +19,31 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public User createUser(UserSaveRequestDto requestDto) {
+    public User createUser(SignupRequestDto requestDto) {
         User user = requestDto.toEntity();
 
         String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
-        requestDto.setPassword(encodedPassword);
+        user.setPassword(encodedPassword);
 
         return userRepository.save(user);
+    }
+
+    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
+        String email = loginRequestDto.getEmail();
+        String password = loginRequestDto.getPassword();
+
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            throw new IllegalArgumentException("회원가입이 되어 있지 않습니다.");
+        }
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        log.info("user email : {}", user.getEmail());
+        LoginResponseDto loginResponseDto = new LoginResponseDto(user.getUserName(), user.getUniqueUrl());
+        return loginResponseDto;
     }
 
     public boolean checkPassword(User user, String rawPassword) {
