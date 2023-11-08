@@ -40,11 +40,12 @@ public class PhotoService {
             return null;
         }
 
-        String originalFilename = file.getOriginalFilename();
-        String storedFileName = createStoredFileName(originalFilename);
+        String filename = file.getOriginalFilename();
+        String fileUrl = createFileUrl(filename);
 
         Photo photo = new Photo();
-        photo.setStoredFileName(storedFileName);
+        photo.setFileName(filename);
+        photo.setFileUrl(fileUrl);
         return photoRepository.save(photo);
     }
 
@@ -52,17 +53,17 @@ public class PhotoService {
         return photoRepository.findById(id).orElse(null);
     }
 
-    private String createStoredFileName(String originalFileName) {
+    private String createFileUrl(String fileName) {
         String uuid = UUID.randomUUID().toString();
-        String ext = extractExt(originalFileName);
-        String storedFileName = uuid + ext;
+        String ext = extractExt(fileName);
+        String fileUrl= uuid + ext;
 
-        return storedFileName;
+        return fileUrl;
     }
 
-    private String extractExt(String originalFilename) {
-        int idx = originalFilename.lastIndexOf(".");
-        String ext = originalFilename.substring(idx);
+    private String extractExt(String filename) {
+        int idx = filename.lastIndexOf(".");
+        String ext = filename.substring(idx);
 
         return ext;
     }

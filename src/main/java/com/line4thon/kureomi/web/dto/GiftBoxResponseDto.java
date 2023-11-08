@@ -22,7 +22,7 @@ public class GiftBoxResponseDto {
     }
 
     public List<PhotoResponseDto> convertPhotoDto(List<Photo> photos) {
-        return photos.stream().map(photo -> new PhotoResponseDto(photo.getId(), photo.getFileName()))
+        return photos.stream().map(photo -> new PhotoResponseDto(photo.getId(), photo.getFileUrl()))
                 .collect(Collectors.toList());
     }
 }
