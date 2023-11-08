@@ -22,9 +22,6 @@ import java.util.UUID;
 public class PhotoService {
     private final PhotoRepository photoRepository;
 
-    @Value("${upload.dir}")
-    private String uploadDir;
-
     @Transactional
     public List<Long> uploadPhotos(MultipartFile[] photos) {
         List<Long> photoIdList = new ArrayList<>();
@@ -39,22 +36,11 @@ public class PhotoService {
 
     @Transactional
     public Photo uploadPhoto(MultipartFile file) {
-        try {
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
+        String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 
-            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            Photo photo = new Photo();
-            photo.setfileName(fileName);
-            return photoRepository.save(photo);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to upload photo: " + e.getMessage());
-        }
+        Photo photo = new Photo();
+        photo.setfileName(fileName);
+        return photoRepository.save(photo);
     }
 
     public Photo getPhotoById(Long id) {
