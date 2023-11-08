@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @Getter
 public class PhotoResponseDto {
     private Long photo_id;
-    private String fileName;
+    private String storedFileName;
 
     @Builder
-    public PhotoResponseDto(Long photo_id, String fileName) {
+    public PhotoResponseDto(Long photo_id, String storedFileName) {
         this.photo_id = photo_id;
-        this.fileName = fileName;
+        this.storedFileName = storedFileName;
     }
 }
