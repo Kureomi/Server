@@ -2,6 +2,7 @@ package com.line4thon.kureomi.domain.photo;
 
 import com.line4thon.kureomi.domain.giftBox.GiftBox;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +24,8 @@ public class Photo {
     @Column(nullable = false)
     private String fileUrl;
 
+    private String data;
+
     @ManyToOne
     @JoinColumn(name = "giftBox_id")
     private GiftBox giftBox;
@@ -30,14 +33,6 @@ public class Photo {
     @Builder
     public Photo(String fileName, String fileUrl) {
         this.fileName = fileName;
-        this.fileUrl = fileUrl;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public void setFileUrl(String fileUrl) {
         this.fileUrl = fileUrl;
     }
 

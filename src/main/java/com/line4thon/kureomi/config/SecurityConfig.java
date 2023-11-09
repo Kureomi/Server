@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // h2 사용 가능하게
                 .authorizeRequests(auth -> auth
-                        .antMatchers("/", "/h2-console/**").permitAll()
+                        .antMatchers("/", "/images/**", "/h2-console/**").permitAll()
                         .antMatchers("/api/v1/kureomi/**").permitAll()
                         .antMatchers("/api/v1/kureomi/{uniqueUrl}/{id}").access("@urlAccessDecision.checkAccess(authentication, #id)")
                 );
