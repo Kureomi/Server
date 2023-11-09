@@ -36,14 +36,34 @@ public class PhotoService {
 
     @Transactional
     public Photo uploadPhoto(MultipartFile file) {
-        String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        if (file.isEmpty()) {
+            return null;
+        }
+
+        String originalFilename = file.getOriginalFilename();
+        String storedFileName = createStoredFileName(originalFilename);
 
         Photo photo = new Photo();
-        photo.setfileName(fileName);
+        photo.setStoredFileName(storedFileName);
         return photoRepository.save(photo);
     }
 
     public Photo getPhotoById(Long id) {
         return photoRepository.findById(id).orElse(null);
+    }
+
+    private String createStoredFileName(String originalFileName) {
+        String uuid = UUID.randomUUID().toString();
+        String ext = extractExt(originalFileName);
+        String storedFileName = uuid + ext;
+
+        return storedFileName;
+    }
+
+    private String extractExt(String originalFilename) {
+        int idx = originalFilename.lastIndexOf(".");
+        String ext = originalFilename.substring(idx);
+
+        return ext;
     }
 }

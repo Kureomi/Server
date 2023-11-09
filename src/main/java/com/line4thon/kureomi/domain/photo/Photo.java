@@ -31,7 +31,7 @@ public class Photo {
         this.fileName = fileName;
     }
 
-    public void setfileName(String fileName) {
+    public void setStoredFileName(String fileName) {
         this.fileName = fileName;
     }
 
