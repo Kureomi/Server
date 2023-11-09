@@ -2,22 +2,16 @@ package com.line4thon.kureomi.service;
 
 import com.line4thon.kureomi.domain.photo.Photo;
 import com.line4thon.kureomi.domain.photo.PhotoRepository;
-import com.line4thon.kureomi.web.dto.GreeneyeRequestDto;
-import com.line4thon.kureomi.web.dto.PhotoTestRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -60,7 +54,6 @@ public class PhotoService {
                 Photo photo = Photo.builder()
                         .fileName(filename)
                         .fileUrl(fileUrl)
-                        .data(data)
                         .build();
 
                 photoRepository.save(photo);
@@ -94,7 +87,17 @@ public class PhotoService {
     }
 
     private String encodeFileToBase64String(String filePath) throws Exception {
-        byte[] fileBytes = Files.readAllBytes(Path.of(filePath));
-        return Base64.getEncoder().encodeToString(fileBytes);
+        byte[] data = Files.readAllBytes(Path.of(filePath));
+        return Base64.getEncoder().encodeToString(data);
+    }
+
+    private String truncateData(byte[] data) {
+        int maxLength = 255;
+        if (data.length > maxLength) {
+            byte[] truncatedData = Arrays.copyOf(data, maxLength);
+            return Base64.getEncoder().encodeToString(truncatedData);
+        } else {
+            return Base64.getEncoder().encodeToString(data);
+        }
     }
 }

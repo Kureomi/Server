@@ -24,7 +24,6 @@ public class Photo {
     @Column(nullable = false)
     private String fileUrl;
 
-    @Column(nullable = false)
     private String data;
 
     @ManyToOne
@@ -32,10 +31,9 @@ public class Photo {
     private GiftBox giftBox;
 
     @Builder
-    public Photo(String fileName, String fileUrl, String data) {
+    public Photo(String fileName, String fileUrl) {
         this.fileName = fileName;
         this.fileUrl = fileUrl;
-        this.data = data;
     }
 
     public void setGiftBox(GiftBox giftBox) {
