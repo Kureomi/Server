@@ -18,6 +18,7 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
 
+    @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/api/v1/kureomi/signup")
     public String createUser(@RequestBody SignupRequestDto requestDto) {
         if (userRepository.findByEmail(requestDto.getEmail()) != null) {
