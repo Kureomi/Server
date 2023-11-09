@@ -34,7 +34,7 @@ public class GiftBoxRepositoryTest {
         // given
         String writer = "Santa";
         String message = "메리 크리스마스";
-        Photo photo = new Photo("sample.jpg");
+        Photo photo = new Photo("sample.jpg", "adjivodifds-zjdifpsvnd.jpg");
 
         GiftBox giftBox = GiftBox.builder()
                 .writer(writer)
