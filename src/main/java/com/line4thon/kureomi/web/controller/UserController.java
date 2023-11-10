@@ -25,7 +25,7 @@ public class UserController {
     @PostMapping("/api/v1/kureomi/signup")
     public String createUser(@RequestBody SignupRequestDto requestDto) {
         if (userRepository.findByEmail(requestDto.getEmail()) != null) {
-            throw new IllegalArgumentException();
+            return "이미 존재하는 사용자입니다.";
         }
 
         User user = userService.createUser(requestDto);
@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @GetMapping("/api/v1/kureomi/home/{uniqueUrl}")
-    public ResponseEntity<UserDto> getUserByName(@PathVariable String uniqueUrl) {
+    public ResponseEntity<UserDto> getUserName(@PathVariable String uniqueUrl) {
         UserDto userDto = userService.getUserDtoByUniqueUrl(uniqueUrl);
 
         if (userDto != null) {

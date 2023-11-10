@@ -6,8 +6,10 @@ import lombok.Getter;
 @Getter
 public class GiftBoxListResponseDto {
     private Long giftBox_id;
+    private String userName;
 
-    public GiftBoxListResponseDto(GiftBox entity) {
+    public GiftBoxListResponseDto(GiftBox entity, String userName) {
         this.giftBox_id = entity.getId();
+        this.userName = userName;
     }
 }

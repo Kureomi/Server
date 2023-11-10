@@ -25,8 +25,6 @@ public class GreenEyeService {
     @Value("${secretKey}")
     private String secretKey;
 
-    private WebClient webClient;
-
     public boolean testPhoto(MultipartFile file, String data) {
         try {
             GreeneyeRequestDto testRequestDto = GreeneyeRequestDto.builder()
