@@ -21,8 +21,8 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
-                .cors()
-                .and()
+                //.cors()
+                //.and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // h2 사용 가능하게
                 .authorizeRequests(auth -> auth

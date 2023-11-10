@@ -44,4 +44,5 @@ public class User {
     public void setUniqueUrl(String uniqueUrl) {
         this.uniqueUrl = uniqueUrl;
     }
+
 }
