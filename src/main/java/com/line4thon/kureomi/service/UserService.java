@@ -4,6 +4,7 @@ import com.line4thon.kureomi.domain.user.UserRepository;
 import com.line4thon.kureomi.web.dto.LoginRequestDto;
 import com.line4thon.kureomi.web.dto.LoginResponseDto;
 import com.line4thon.kureomi.web.dto.SignupRequestDto;
+import com.line4thon.kureomi.web.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,21 @@ public class UserService {
         LoginResponseDto loginResponseDto = new LoginResponseDto(user.getUserName(), user.getUniqueUrl());
         return loginResponseDto;
     }
+
+//    public User getUserByUniqueUrl(String uniqueUrl) {
+//        return userRepository.findByUniqueUrl(uniqueUrl);
+//    }
+
+    public UserDto getUserDtoByUniqueUrl(String uniqueUrl) {
+        User user = userRepository.findByUniqueUrl(uniqueUrl);
+
+        if (user != null) {
+            return new UserDto(user.getUserName(), user.getUniqueUrl());
+        } else {
+            return null; // 또는 예외 처리 등을 수행할 수 있습니다.
+        }
+    }
+
 
     public boolean checkPassword(User user, String rawPassword) {
         String encodedPassword = user.getPassword();
