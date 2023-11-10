@@ -42,14 +42,10 @@ public class UserService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
-        log.info("user email : {}", user.getEmail());
+
         LoginResponseDto loginResponseDto = new LoginResponseDto(user.getUserName(), user.getUniqueUrl());
         return loginResponseDto;
     }
-
-//    public User getUserByUniqueUrl(String uniqueUrl) {
-//        return userRepository.findByUniqueUrl(uniqueUrl);
-//    }
 
     public UserDto getUserDtoByUniqueUrl(String uniqueUrl) {
         User user = userRepository.findByUniqueUrl(uniqueUrl);
@@ -57,10 +53,9 @@ public class UserService {
         if (user != null) {
             return new UserDto(user.getUserName(), user.getUniqueUrl());
         } else {
-            return null; // 또는 예외 처리 등을 수행할 수 있습니다.
+            return null;
         }
     }
-
 
     public boolean checkPassword(User user, String rawPassword) {
         String encodedPassword = user.getPassword();

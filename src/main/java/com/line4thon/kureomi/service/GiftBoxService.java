@@ -48,7 +48,7 @@ public class GiftBoxService {
     public List<GiftBoxListResponseDto> findAllDesc(String uniqueUrl) {
         User user = userRepository.findByUniqueUrl(uniqueUrl);
         return giftBoxRepository.findAllByUserDESC().stream()
-                .map(GiftBoxListResponseDto::new)
+                .map(gitBox -> new GiftBoxListResponseDto(gitBox, user.getUserName()))
                 .collect(Collectors.toList());
     }
 
