@@ -32,8 +32,7 @@ public class UserController {
         user.setUniqueUrl(generateUniqueUrl());
         userRepository.save(user);
 
-        String finalUrl = "http://photoKureomi.com/" + user.getUniqueUrl();
-        return finalUrl;
+        return user.getUniqueUrl();
     }
 
     @PostMapping("/api/v1/kureomi/login")
