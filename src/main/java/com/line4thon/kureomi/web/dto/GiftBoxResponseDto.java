@@ -12,7 +12,7 @@ public class GiftBoxResponseDto {
     private Long giftBox_id;
     private String writer;
     private String message;
-    private List<PhotoResponseDto> photos;
+    private List<PhotoInfoDto> photos;
 
     public GiftBoxResponseDto(GiftBox entity) {
         this.giftBox_id = entity.getId();
@@ -21,8 +21,8 @@ public class GiftBoxResponseDto {
         this.photos = convertPhotoDto(entity.getPhotos());
     }
 
-    public List<PhotoResponseDto> convertPhotoDto(List<Photo> photos) {
-        return photos.stream().map(photo -> new PhotoResponseDto(photo.getId(), photo.getFileUrl()))
+    public List<PhotoInfoDto> convertPhotoDto(List<Photo> photos) {
+        return photos.stream().map(photo -> new PhotoInfoDto(photo.getId(), photo.getFileUrl()))
                 .collect(Collectors.toList());
     }
 }

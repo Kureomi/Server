@@ -2,7 +2,10 @@ package com.line4thon.kureomi.service;
 
 import com.line4thon.kureomi.domain.photo.Photo;
 import com.line4thon.kureomi.domain.photo.PhotoRepository;
+import com.line4thon.kureomi.web.dto.PhotoInfoDto;
+import com.line4thon.kureomi.web.dto.PhotoTestResponseDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +16,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PhotoService {
@@ -21,15 +25,21 @@ public class PhotoService {
     private final GreenEyeService greenEyeService;
 
     @Transactional
-    public List<Long> uploadPhotos(MultipartFile[] photos) {
-        List<Long> photoIdList = new ArrayList<>();
+    public PhotoTestResponseDto uploadPhotos(MultipartFile[] photos) {
+        List<PhotoInfoDto> photoInfoList = new ArrayList<>();
 
         for (MultipartFile file : photos) {
             Photo photo = uploadPhoto(file);
-            photoIdList.add(photo.getId());
+
+            PhotoInfoDto photoInfoDto = PhotoInfoDto.builder()
+                    .photo_id(photo.getId())
+                    .fileUrl(photo.getFileUrl())
+                    .build();
+
+            photoInfoList.add(photoInfoDto);
         }
 
-        return photoIdList;
+        return new PhotoTestResponseDto(photoInfoList);
     }
 
     @Transactional
@@ -49,17 +59,25 @@ public class PhotoService {
 
             String data = encodeFileToBase64String(filePath.toString());
             boolean isImageValid = greenEyeService.testPhoto(file, data);
+            log.info("이미지 응답 true/false{}", isImageValid);
 
             if (isImageValid) {
                 Photo photo = Photo.builder()
                         .fileName(filename)
                         .fileUrl(fileUrl)
                         .build();
-
                 photoRepository.save(photo);
                 return photo;
             } else {
-                return null;
+                String defaultImagePath = "./src/main/resources/static/images/default.png";
+                Path defaultImage = Paths.get(defaultImagePath);
+
+                Photo defaultPhoto = Photo.builder()
+                        .fileName("default.png")
+                        .fileUrl("default.png")
+                        .build();
+                photoRepository.save(defaultPhoto);
+                return defaultPhoto;
             }
         } catch (Exception e) {
             e.printStackTrace();

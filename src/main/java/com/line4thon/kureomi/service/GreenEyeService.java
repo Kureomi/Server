@@ -19,11 +19,11 @@ import java.util.Collections;
 @Service
 public class GreenEyeService {
 
-    @Value("${invokeUrl}")
-    private String invokeUrl;
+    //@Value("${invokeUrl}")
+    private String invokeUrl="https://clovagreeneye.apigw.ntruss.com/custom/v1/93/fe8e30820ec54a54cd52e097357417baee5d2fe34a1f899c6789dc16b35839d2/predict";
 
-    @Value("${secretKey}")
-    private String secretKey;
+    //@Value("${secretKey}")
+    private String secretKey="S2xyaGt5ZVRrQkllaU5LZHJhUm5hWHJnTUxVS1RyamM=";
 
     public boolean testPhoto(MultipartFile file, String data) {
         try {
@@ -37,7 +37,7 @@ public class GreenEyeService {
 
             String apiResponse = callGreeneyeApi(testRequestDto);
 
-            if (isNormalPhoto(apiResponse)) {
+            if (isNormalPhoto(apiResponse) || isAdultPhoto(apiResponse)) {
                 return true;
             }
         } catch (Exception e) {
@@ -81,6 +81,38 @@ public class GreenEyeService {
 
                 if (normalConfidence != null) {
                     return imageConfidence.equals(normalConfidence);
+                }
+                else {
+                    return false;
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean isAdultPhoto(String apiResponse) {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject response = (JSONObject) parser.parse(apiResponse);
+            JSONArray imageArray = (JSONArray) response.get("images");
+            log.info("{}", imageArray);
+
+            if (imageArray != null && !imageArray.isEmpty()) {
+                JSONObject firstImage = (JSONObject) imageArray.get(0);
+
+                Double imageConfidence = (Double) firstImage.get("confidence");
+
+                JSONObject resultObject = (JSONObject) firstImage.get("result");
+                JSONObject adultObject = (JSONObject) resultObject.get("adult");
+                Double adultConfidence = (Double) adultObject.get("confidence");
+
+                if (adultConfidence != null) {
+                    return imageConfidence.equals(adultConfidence);
+                }
+                else {
+                    return false;
                 }
             }
         } catch (ParseException e) {
