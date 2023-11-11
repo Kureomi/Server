@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,9 +48,14 @@ public class GiftBoxService {
     @Transactional(readOnly = true)
     public List<GiftBoxListResponseDto> findAllDesc(String uniqueUrl) {
         User user = userRepository.findByUniqueUrl(uniqueUrl);
-        return giftBoxRepository.findAllByUserDESC().stream()
-                .map(gitBox -> new GiftBoxListResponseDto(gitBox, user.getUserName()))
-                .collect(Collectors.toList());
+
+        if (user != null) {
+            return giftBoxRepository.findAllByUserOrderByCreatedAtDesc(user).stream()
+                    .map(giftBox -> new GiftBoxListResponseDto(giftBox, user.getUserName()))
+                    .collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     @Transactional(readOnly = true)

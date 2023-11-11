@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-public class GiftBoxController {
+public class  GiftBoxController {
 
     private final GiftBoxService giftBoxService;
 
