@@ -12,5 +12,7 @@ public interface GiftBoxRepository extends JpaRepository<GiftBox, Long> {
     @Query("SELECT g FROM GiftBox g WHERE g.user.user_id = g.user.user_id ORDER BY g.id DESC")
     List<GiftBox> findAllByUserDESC();
 
+    List<GiftBox> findAllByUserOrderByCreatedAtDesc(User user);
+
     Optional<GiftBox> findByUserAndId(User user, Long id);
 }

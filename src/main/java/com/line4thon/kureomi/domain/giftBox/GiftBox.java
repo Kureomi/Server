@@ -2,11 +2,13 @@ package com.line4thon.kureomi.domain.giftBox;
 
 import com.line4thon.kureomi.domain.user.User;
 import com.line4thon.kureomi.domain.photo.Photo;
+import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,10 @@ public class GiftBox {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @NotNull
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt=LocalDateTime.now();
 
     @Builder
     public GiftBox(String writer, String message, User user) {
