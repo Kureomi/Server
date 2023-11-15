@@ -18,25 +18,17 @@ import java.nio.file.Paths;
 @RequiredArgsConstructor
 @RestController
 public class PhotoController {
+    private String imagePath="src/main/resources/static/images/";
     private final PhotoService photoService;
 
-    @PostMapping("/api/v1/kureomi/photo")
+    @PostMapping("/api/v1/kureomi/photo/before-test")
     public PhotoTestResponseDto savePhotos(@RequestParam("photos") MultipartFile[] photos) {
         PhotoTestResponseDto photoInfo = photoService.uploadPhotos(photos);
         return photoInfo;
     }
 
-//    @CrossOrigin
-//    @GetMapping("/image")
-//    public ResponseEntity<?> returnImage(@RequestParam String imageName) {
-//        String path = ""; //이미지가 저장된 위치
-//        Resource resource = new FileSystemResource(path + imageName);
-//        return new ResponseEntity<>(resource, HttpStatus.OK);
-//    }
 
-    private String imagePath="src/main/resources/static/images/"; // application.properties에서 설정된 이미지 경로를 가져옵니다.
-
-    @GetMapping("/image")
+    @GetMapping("/api/v1/kureomi/photo/after-test")
     public ResponseEntity<Resource> returnImage(@RequestParam String imageName) {
         String fullPath = Paths.get(imagePath, imageName).toString();
         Resource resource = new FileSystemResource(fullPath);
