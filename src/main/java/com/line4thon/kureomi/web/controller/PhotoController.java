@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 @RequiredArgsConstructor
 @RestController
 public class PhotoController {
-    private String imagePath="src/main/resources/static/images/";
+    private final String imagePath = "src/main/resources/static/images/";
     private final PhotoService photoService;
 
     @PostMapping("/api/v1/kureomi/photo/before-test")
@@ -28,7 +28,7 @@ public class PhotoController {
     }
 
 
-    @GetMapping("/api/v1/kureomi/photo/after-test")
+    @GetMapping("/api/v1/kureomi/photo")
     public ResponseEntity<Resource> returnImage(@RequestParam String imageName) {
         String fullPath = Paths.get(imagePath, imageName).toString();
         Resource resource = new FileSystemResource(fullPath);
